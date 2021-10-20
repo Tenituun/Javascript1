@@ -1,2 +1,2 @@
-This is my readme. You shouldn't read it.
-Ok maybe you should. test
+This is my readme. There isn't too much here.
+Thank you anyway.
