@@ -3,6 +3,7 @@ const inputBox = document.querySelector(".inputField input");
 const addBtn = document.querySelector(".inputField button");
 const todoList = document.querySelector(".todoList");
 const deleteAllBtn = document.querySelector(".footer button");
+const pendingTasksNumb = document.querySelector(".pendingTasks");
 // var counter = document.querySelectorAll('.checked').length;
 var counter = 0;
 
@@ -24,14 +25,18 @@ check.addEventListener('click', function (ev) {
     if (ev.target.tagName === 'LI') {
         ev.target.classList.toggle('checked');
         counterUpdate();
+        pendingTasksNumb.textContent = listArray.length - counter;
     }
 }, false);
 
 window.addEventListener('load', (event) => {
     var counter = document.getElementsByClassName('checked').length;
     console.log(counter);
-  });
-
+});
+setInterval(function() {
+    counterPush();
+    console.log(counter);
+}, 1000);
 //adding written task to the todo list
 showTasks();
 addBtn.onclick = () => {
@@ -54,11 +59,10 @@ function showTasks() {
     } else {
         listArray = JSON.parse(getLocalStorageData);
     }
-    const pendingTasksNumb = document.querySelector(".pendingTasks");
+    // const pendingTasksNumb = document.querySelector(".pendingTasks");
     console.log(counter);
-    counterUpdate();
     var help = document.querySelectorAll('.checked').length;
-      pendingTasksNumb.textContent = listArray.length - help;
+    pendingTasksNumb.textContent = listArray.length - help;
     if (listArray.length > 0) {
         deleteAllBtn.classList.add("active");
     } else {
@@ -77,16 +81,23 @@ function deleteTask(index) {
     listArray = JSON.parse(getLocalStorageData);
     listArray.splice(index, 1);
     localStorage.setItem("New Todo", JSON.stringify(listArray));
+    counterUpdate();
+    counter--;
     showTasks();
 }
 //remove everything when clicking the clear all
 deleteAllBtn.onclick = () => {
     listArray = [];
     localStorage.setItem("New Todo", JSON.stringify(listArray));
+    counter = 0;
+    counterUpdate();
+    location.reload();
+    counterPush();
     showTasks();
 }
-
 function counterUpdate() {
-    var counter = document.getElementsByClassName('checked').length;
-    
+    counter = document.getElementsByClassName('checked').length;
+}
+function counterPush() {
+    pendingTasksNumb.textContent = listArray.length - counter;
 }
