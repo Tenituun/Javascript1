@@ -4,9 +4,7 @@ const addBtn = document.querySelector(".inputField button");
 const todoList = document.querySelector(".todoList");
 const deleteAllBtn = document.querySelector(".footer button");
 const pendingTasksNumb = document.querySelector(".pendingTasks");
-// var counter = document.querySelectorAll('.checked').length;
 var counter = 0;
-
 
 
 //It was easier to just disable the add button than to send annoying alerts.
